@@ -1,0 +1,39 @@
+# -----------------------------------------------------------------------------
+# Regular builds
+# -----------------------------------------------------------------------------
+sudo: false
+
+# Limit clone depth to speed up build
+git:
+  depth: 3
+
+language: python
+matrix:
+    include:
+        - python: 2.7
+          env: TOXENV=py27
+        - python: 3.3
+          env: TOXENV=py33
+        - python: 3.4
+          env: TOXENV=py34
+        - python: 3.5
+          env: TOXENV=py35
+        - python: 3.6
+          env: TOXENV=py36
+        - python: pypy
+          env: TOXENV=pypy
+        - env: TOXENV=flake8
+
+
+# command to install dependencies
+install:
+- pip install tox coverage codacy-coverage
+
+# command to run builds and tests
+script:
+- tox
+
+# Code coverage results after success
+after_success:
+- coverage xml
+- python-codacy-coverage -r coverage.xml
