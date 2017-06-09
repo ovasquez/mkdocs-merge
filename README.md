@@ -18,8 +18,10 @@ $ mkdocs-merge run MASTER_SITE SITES...
 ```
 ### Parameters
 
-- `MASTER_SITE`: the path to the MkDocs site where the base `mkdocs.yml` file resides. This is where all other sites will be merged into.
-- `SITES`: the paths to each of the MkDocs sites that will be merged. Each of these paths is expected to have a `mkdocs.yml` file and a `docs` folder.
+- `MASTER_SITE`: the path to the MkDocs site where the base `mkdocs.yml` file resides. This is where all other sites
+    will be merged into.
+- `SITES`: the paths to each of the MkDocs sites that will be merged. Each of these paths is expected to have a
+    `mkdocs.yml` file and a `docs` folder.
 
 ### Example
 ```bash
@@ -47,15 +49,31 @@ pages:
   - website: website/index.md # Page merged from /newpath/website
 ```
 
+## Development
+### Install
+Clone the repository and specify the `dev` dependencies on the install command.
+
+Check this [StackOverflow answer](https://stackoverflow.com/a/28842733/2313246) for more details about the `dev`
+dependencies
+```bash
+$ pip install -e .[dev]
+``` 
+
+### Test
+The tests can be run using `tox` from the root directory. `tox` is part of the development dependencies:
+```bash
+$ tox
+```
+
 ## Project Status
 Very basic implementation. The code works but doesn't allow to specify options for the merging.
 
 ### Pending work
 
 - [ ] Refactoring of large functions.
-- [ ] Travis CI build.
+- [x] Travis CI build.
 - [ ] Publish pip package.
 - [ ] Better error handling.
 - [ ] Merge configuration via CLI options.
-- [ ] Unit testing.
+- [x] Unit testing (work in progress).
 - [ ] Consider more complex cases.
