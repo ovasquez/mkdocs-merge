@@ -3,6 +3,11 @@
 This simple tool allows you to merge the source of multiple [MkDocs](http://www.mkdocs.org/) sites
 into a single one converting each of the specified sites to a subpage of the master site.
 
+MkDocs-Merge supports Python versions 2.7, 3.3, 3.4, 3.5, 3.6 and pypy.
+
+Support for Python 2.6 was removed due to the use of `ruamel.yaml`. More details
+[here](https://yaml.readthedocs.io/en/latest/pyyaml.html#py2-py3-reintegration).
+
 ## Install
 
 > pip package not published yet
