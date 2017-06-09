@@ -16,8 +16,6 @@ Support for Python 2.6 (MkDocs does support 2.6) was removed due to the use of `
 
 ## Install
 
-> pip package not published yet
-
 ```bash
 $ pip install mkdocs-merge
 ```
