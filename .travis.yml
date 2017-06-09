@@ -27,7 +27,7 @@ matrix:
 
 # command to install dependencies
 install:
-- pip install tox coverage codacy-coverage
+- pip install tox coverage codacy-coverage twine wheel
 
 # command to run builds and tests
 script:
@@ -37,3 +37,15 @@ script:
 after_success:
 - coverage xml
 - python-codacy-coverage -r coverage.xml
+
+# Deploy to PyPi
+deploy:
+  provider: pypi
+  user: ovasquez
+  distributions: sdist bdist_wheel
+  password:
+    secure: "MFzeG0W8BS768XkOtycmvAw67S3N45UZxlQKeqfe9UsdRkstPVxmz3Pq5u5LLi8Z6IbTGn65GC+7E8IelcquPg5q6RL9z6lSz/9Vd3pQYRfvx82Mn6NULFjtqNYYp9h00u0O70iu4HSXdNdBm9eLFK23drgNCXxNkzo1fOg4tD/Jr8F0DmgxrxG1waiVHG6nuON6vAdHQy/8oBi3ZErYcrr6g6YNFX02RXTkVxGHvjUBbR+eYtCZ5w2S9ILaKyzMp/q3UXO93CLd9TKT27b90DjVI64NUygNETTmOcy54ddUR257Caa5ho/g3BgA/GlqvingoyDqLYz7pLeMZsVV6dtYX0A3s6TjkvA/kxBlGfsoGakI1c4peb/Gp4i6jiAY0KHYCIcJU49KJv67tl0iH6UMpDqmmlBxlEfTLXbqxny3uodisffIj9CFJAFaQCoad4Y4p4ql1xYh770Uh9n0P7KbS5T0KkzBmIw6qBl0TgPKES21AGReL8bPJjjdFolePblPt7GWSC8l3E/WvXDvgYPLmZpaVzI89JGpCwzWiPhcXt0GpgDVe8MijVB5TSTVArbsT5Rtz6GqCE1ss+r4HEp3MILwdzx6FT9DIY1wi5ylnJIHuMYzgTNc/5LDxKEgsZ83Z7Toe4aoVhkKu1qU4lXnSywD7y6I4Mk01at9RWQ="
+  on:
+    tags: true
+    repo: ovasquez/mkdocs-merge
+    condition: "$TOXENV = py36"
