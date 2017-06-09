@@ -4,6 +4,7 @@ This simple tool allows you to merge the source of multiple [MkDocs](http://www.
 into a single one converting each of the specified sites to a subpage of the master site.
 
 ---
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/10abc652aca046079f4ab069af689163)](https://www.codacy.com/app/oscarv19/mkdocs-merge?utm_source=github.com&utm_medium=referral&utm_content=ovasquez/mkdocs-merge&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/ovasquez/mkdocs-merge.svg?branch=master)](https://travis-ci.org/ovasquez/mkdocs-merge)
 
 
