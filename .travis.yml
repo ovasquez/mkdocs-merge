@@ -5,7 +5,7 @@ sudo: false
 
 # Limit clone depth to speed up build
 git:
-  depth: 1
+  depth: 3
 
 language: python
 matrix:
@@ -27,10 +27,13 @@ matrix:
 
 # command to install dependencies
 install:
-- pip install tox
+- pip install tox coverage codacy-coverage
 
 # command to run builds and tests
 script:
 - tox
+
+# Code coverage results after success
+after_success:
 - coverage xml
 - python-codacy-coverage -r coverage.xml
