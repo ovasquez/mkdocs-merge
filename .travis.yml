@@ -1,3 +1,12 @@
+# -----------------------------------------------------------------------------
+# Regular builds
+# -----------------------------------------------------------------------------
+sudo: false
+
+# Limit clone depth to speed up build
+git:
+  depth: 1
+
 language: python
 matrix:
     include:
@@ -9,8 +18,8 @@ matrix:
           env: TOXENV=py34
         - python: 3.5
           env: TOXENV=py35
-        - python: 3.5
-          env: TOXENV=py35
+        - python: 3.6
+          env: TOXENV=py36
         - python: pypy
           env: TOXENV=pypy
         - env: TOXENV=flake8
@@ -19,6 +28,9 @@ matrix:
 # command to install dependencies
 install:
 - pip install tox
-# command to run tests
+
+# command to run builds and tests
 script:
 - tox
+- coverage xml
+- python-codacy-coverage -r coverage.xml
