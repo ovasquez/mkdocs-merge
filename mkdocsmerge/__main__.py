@@ -75,10 +75,11 @@ def merge_sites(sites, master_site):
     """
     new_pages = []
     for site in sites:
+        click.echo('\nAttempting to merge site: ' + site)
         site_yaml = os.path.join(site, MKDOCS_YML)
         if not os.path.isfile(site_yaml):
-            click.echo('Could not find the site yml file, this site will be '
-                       'skipped: ' + site_yaml)
+            click.echo('Could not find the site yaml file, this site will be '
+                       'skipped: "' + site_yaml + '"')
             continue
 
         with open(site_yaml) as site_file:
@@ -90,12 +91,17 @@ def merge_sites(sites, master_site):
                            'This site will be skipped.')
                 continue
 
+        # Check 'site_data' has the 'pages' mapping
+        if not site_data['pages']:
+            click.echo('Could not find the "pages" entry in the yaml file: "' + site_yaml + '", this site '
+                       'will be skipped.')
+
         try:
             site_name = str(site_data['site_name'])
         except Exception:
             site_name = os.path.basename(site)
-            click.echo('Could not find the site_name in the yml file, '
-                       'defaulting to the folder name' + site_name)
+            click.echo('Could not find the "site_name" property in the yaml file. '
+                       'Defaulting the site folder name to: "' + site_name + '"')
 
         site_root = site_name.replace(' ', '_').lower()
 
@@ -109,6 +115,8 @@ def merge_sites(sites, master_site):
             continue
 
         try:
+            if os.path.isdir(new_site_docs):
+                shutil.rmtree(new_site_docs)
             shutil.copytree(old_site_docs, new_site_docs)
         except OSError as exc:
             click.echo('Error copying files of site "' +
@@ -119,6 +127,10 @@ def merge_sites(sites, master_site):
         # Update the pages data with the new path after files have been copied
         update_pages(site_data['pages'], site_root)
         new_pages.append({site_name: site_data['pages']})
+
+        # Inform the user
+        click.echo('Successfully merged site located in "' + site +
+                   '" as sub-site "' + site_name + '"\n')
     return new_pages
 
 
