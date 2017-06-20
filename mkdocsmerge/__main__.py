@@ -1,12 +1,14 @@
 """MkDocs Merge module."""
 
 import os.path
-import shutil
+from distutils.dir_util import copy_tree
 import click
 from ruamel.yaml import YAML
 from mkdocsmerge import __version__
 
 MKDOCS_YML = 'mkdocs.yml'
+UNIFY_HELP = ('Unify sites with the same "site_name" into a single sub-site. Contents of unified '
+              'sub-sites will be stored in the same subsite folder.')
 
 
 @click.group(context_settings={'help_option_names': ['-h', '--help']})
@@ -34,11 +36,12 @@ def cli():
 @cli.command()
 @click.argument('master-site', type=click.Path())
 @click.argument('sites', type=click.Path(), nargs=-1)
-def run(master_site, sites):
+@click.option('-u', '--unify-sites', is_flag=True, help=UNIFY_HELP)
+def run(master_site, sites, unify_sites):
     """
-    Executes the site merging. For more info 'mkdocs-merge run -h'
-
-    Usage: mkdocs-merge run MASTER_SITE SITES
+    Executes the site merging.\n
+    MASTER_SITE: base site of the merge.\n
+    SITES: sites to merge into the base site.
     """
 
     # Custom argument validation instead of an ugly generic error
@@ -55,7 +58,7 @@ def run(master_site, sites):
         return
 
     # Get all site's pages and copy their files
-    new_pages = merge_sites(sites, master_site)
+    new_pages = merge_sites(sites, master_site, unify_sites)
 
     # Round-trip yaml loader to preserve formatting and comments
     yaml = YAML()
@@ -68,7 +71,7 @@ def run(master_site, sites):
         yaml.dump(master_data, master_file)
 
 
-def merge_sites(sites, master_site):
+def merge_sites(sites, master_site, unify_sites):
     """
     Adds the sites' "pages" section to the master_data and copies the sites
     content to the master_site.
@@ -93,8 +96,8 @@ def merge_sites(sites, master_site):
 
         # Check 'site_data' has the 'pages' mapping
         if not site_data['pages']:
-            click.echo('Could not find the "pages" entry in the yaml file: "' + site_yaml + '", this site '
-                       'will be skipped.')
+            click.echo('Could not find the "pages" entry in the yaml file: "' + site_yaml + '", '
+                       'this site will be skipped.')
 
         try:
             site_name = str(site_data['site_name'])
@@ -110,14 +113,13 @@ def merge_sites(sites, master_site):
         old_site_docs = os.path.join(site, 'docs')
 
         if not os.path.isdir(old_site_docs):
-            click.echo('Could not find the site "docs" folder, this site will '
+            click.echo('Could not find the site "docs" folder. This site will '
                        'be skipped: ' + old_site_docs)
             continue
 
         try:
-            if os.path.isdir(new_site_docs):
-                shutil.rmtree(new_site_docs)
-            shutil.copytree(old_site_docs, new_site_docs)
+            # Update if the directory already exists to allow site unification
+            copy_tree(old_site_docs, new_site_docs, update=1)
         except OSError as exc:
             click.echo('Error copying files of site "' +
                        site_name + '". This site will be skipped.')
@@ -126,12 +128,32 @@ def merge_sites(sites, master_site):
 
         # Update the pages data with the new path after files have been copied
         update_pages(site_data['pages'], site_root)
-        new_pages.append({site_name: site_data['pages']})
+        merge_single_site(new_pages, site_name,
+                          site_data['pages'], unify_sites)
 
         # Inform the user
         click.echo('Successfully merged site located in "' + site +
                    '" as sub-site "' + site_name + '"\n')
     return new_pages
+
+
+def merge_single_site(global_pages, site_name, site_pages, unify_sites):
+    """
+    Merges a single site's pages to the global pages' data. Supports unification
+    of sub-sites with the same site_name.
+    """
+    unified = False
+    if unify_sites:
+        # Check if the site_name already exists in the global_pages
+        for page in global_pages:
+            if site_name in page:
+                # Combine the new site's pages to the existing entry
+                page[site_name] = page[site_name] + site_pages
+                unified = True
+                break
+    # Append to the global list if no unification was requested or it didn't exist.
+    if (not unify_sites) or (not unified):
+        global_pages.append({site_name: site_pages})
 
 
 def update_pages(pages, site_root):

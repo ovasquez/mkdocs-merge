@@ -1,7 +1,9 @@
 # MkDocs Merge
 
 This simple tool allows you to merge the source of multiple [MkDocs](http://www.mkdocs.org/) sites
-into a single one converting each of the specified sites to a subpage of the master site.
+into a single one converting each of the specified sites to a sub-site of the master site.
+
+Supports unification of sites with the same `site_name` into a single sub-site.
 
 ---
 [![PyPI version](https://img.shields.io/pypi/v/mkdocs-merge.svg)](https://pypi.python.org/pypi/mkdocs-merge)
@@ -23,7 +25,7 @@ $ pip install mkdocs-merge
 ## Usage
 
 ```bash
-$ mkdocs-merge run MASTER_SITE SITES... 
+$ mkdocs-merge run MASTER_SITE SITES [-u]... 
 ```
 ### Parameters
 
@@ -31,6 +33,7 @@ $ mkdocs-merge run MASTER_SITE SITES...
     will be merged into.
 - `SITES`: the paths to each of the MkDocs sites that will be merged. Each of these paths is expected to have a
     `mkdocs.yml` file and a `docs` folder.
+- `-u` (optional): Unify sites with the same "site_name" into a single sub-site.  
 
 ### Example
 ```bash
@@ -38,7 +41,7 @@ $ mkdocs-merge run root/mypath/mysite /another/path/new-site /newpath/website
 ```
 
 A single MkDocs site will be created in `root/mypath/mysite`, and the sites in
-`/another/path/new-site` and `/newpath/website` will be added as subpages.
+`/another/path/new-site` and `/newpath/website` will be added as sub-pages.
 
 **Original `root/mypath/mysite/mkdocs.yml`**
 ```yaml
@@ -81,8 +84,8 @@ Very basic implementation. The code works but doesn't allow to specify options f
 
 - [ ] Refactoring of large functions.
 - [x] Travis CI build.
-- [ ] Publish pip package.
+- [x] Publish pip package.
 - [ ] Better error handling.
-- [ ] Merge configuration via CLI options.
+- [x] Merge configuration via CLI options.
 - [x] Unit testing (work in progress).
 - [ ] Consider more complex cases.
