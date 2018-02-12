@@ -20,7 +20,6 @@ def run_merge(master_site, sites, unify_sites, print_func):
                    'make sure it exists: ' + master_yaml)
         return
 
-
     # Get all site's pages and copy their files
     new_pages = merge_sites(sites, master_site, unify_sites, print_func)
 
