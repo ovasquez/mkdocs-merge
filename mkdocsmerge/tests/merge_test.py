@@ -3,7 +3,7 @@ Tests for the MkDocs Merge package
 """
 
 import unittest
-import mkdocsmerge.__main__
+import mkdocsmerge.merge
 
 
 class TestSiteMerges(unittest.TestCase):
@@ -42,7 +42,7 @@ class TestSiteMerges(unittest.TestCase):
                         {'Second': subpage_path + 'projects/second.md'}
                     ]}]
 
-        mkdocsmerge.__main__.update_pages(pages, subpage)
+        mkdocsmerge.merge.update_pages(pages, subpage, lambda x: None)
         self.assertEqual(pages, expected)
 
     def test_singe_site_merge(self):
@@ -76,7 +76,7 @@ class TestSiteMerges(unittest.TestCase):
                         ]},
                     ]}]
 
-        mkdocsmerge.__main__.merge_single_site(
+        mkdocsmerge.merge.merge_single_site(
             global_pages, site_name, site_pages, False)
         self.assertEqual(global_pages, expected)
 
@@ -110,6 +110,6 @@ class TestSiteMerges(unittest.TestCase):
                         ]},
                     ]}]
 
-        mkdocsmerge.__main__.merge_single_site(
+        mkdocsmerge.merge.merge_single_site(
             global_pages, site_name, site_pages, True)
         self.assertEqual(global_pages, expected)
