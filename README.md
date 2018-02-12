@@ -25,8 +25,9 @@ $ pip install mkdocs-merge
 ## Usage
 
 ```bash
-$ mkdocs-merge run MASTER_SITE SITES [-u]... 
+$ mkdocs-merge run MASTER_SITE SITES [-u]...
 ```
+
 ### Parameters
 
 - `MASTER_SITE`: the path to the MkDocs site where the base `mkdocs.yml` file resides. This is where all other sites
@@ -36,6 +37,7 @@ $ mkdocs-merge run MASTER_SITE SITES [-u]...
 - `-u` (optional): Unify sites with the same "site_name" into a single sub-site.  
 
 ### Example
+
 ```bash
 $ mkdocs-merge run root/mypath/mysite /another/path/new-site /newpath/website
 ```
@@ -44,6 +46,7 @@ A single MkDocs site will be created in `root/mypath/mysite`, and the sites in
 `/another/path/new-site` and `/newpath/website` will be added as sub-pages.
 
 **Original `root/mypath/mysite/mkdocs.yml`**
+
 ```yaml
 ...
 pages:
@@ -52,6 +55,7 @@ pages:
 ```
 
 **Merged `root/mypath/mysite/mkdocs.yml`**
+
 ```yaml
 ...
 pages:
@@ -62,22 +66,27 @@ pages:
 ```
 
 ## Development
-### Install
+
+### Dev Install
+
 Clone the repository and specify the `dev` dependencies on the install command.
 
 Check this [StackOverflow answer](https://stackoverflow.com/a/28842733/2313246) for more details about the `dev`
 dependencies
+
 ```bash
 $ pip install -e .[dev]
-``` 
+```
 
 ### Test
+
 The tests can be run using `tox` from the root directory. `tox` is part of the development dependencies:
 ```bash
 $ tox
 ```
 
 ## Project Status
+
 Very basic implementation. The code works but doesn't allow to specify options for the merging.
 
 ### Pending work
@@ -89,3 +98,4 @@ Very basic implementation. The code works but doesn't allow to specify options f
 - [x] Merge configuration via CLI options.
 - [x] Unit testing (work in progress).
 - [ ] Consider more complex cases.
+- [x] Make MkDocs Merge module friendly: thanks to [mihaipopescu](https://github.com/mihaipopescu)

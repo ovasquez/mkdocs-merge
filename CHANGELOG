@@ -1,0 +1,4 @@
+# Changelog
+
+## 0.0.4 - February 2, 2018
+- Separate CLI functionality from the Merge logic for a more module friendly package.
