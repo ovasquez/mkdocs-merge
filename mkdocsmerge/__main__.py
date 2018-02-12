@@ -1,7 +1,7 @@
 """MkDocs Merge module."""
 
 import os.path
-from distutils.dir_util import copy_tree
+import distutils
 import click
 from ruamel.yaml import YAML
 from mkdocsmerge import __version__
@@ -123,7 +123,7 @@ def merge_sites(sites, master_site, unify_sites):
 
         try:
             # Update if the directory already exists to allow site unification
-            copy_tree(old_site_docs, new_site_docs, update=1)
+            distutils.dir_util.copy_tree(old_site_docs, new_site_docs, update=1)
         except OSError as exc:
             click.echo('Error copying files of site "' +
                        site_name + '". This site will be skipped.')
