@@ -1,7 +1,10 @@
 # Changelog
 
+## 0.4.2 - February 14, 2018
+- Fixed import error in `merge.py` when used in Windows.
+
 ## 0.4.1 - February 14, 2018
-- Fixed import error when used from CLI
+- Fixed import error when used from CLI.
 
 ## 0.4.0 - February 2, 2018
 - Separate CLI functionality from the Merge logic for a more module friendly package.
