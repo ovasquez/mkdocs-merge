@@ -13,9 +13,6 @@ Supports unification of sites with the same `site_name` into a single sub-site.
 
 MkDocs-Merge supports Python versions 2.7, 3.3, 3.4, 3.5, 3.6 and pypy.
 
-Support for Python 2.6 (MkDocs does support 2.6) was removed due to the use of `ruamel.yaml`. More details
-[here](https://yaml.readthedocs.io/en/latest/pyyaml.html#py2-py3-reintegration).
-
 ## Install
 
 ```bash
@@ -97,5 +94,6 @@ Very basic implementation. The code works but doesn't allow to specify options f
 - [ ] Better error handling.
 - [x] Merge configuration via CLI options.
 - [x] Unit testing (work in progress).
+- [ ] CLI integration testing.
 - [ ] Consider more complex cases.
 - [x] Make MkDocs Merge module friendly: thanks to [mihaipopescu](https://github.com/mihaipopescu)

@@ -1,6 +1,8 @@
 import os.path
-import distutils
 from ruamel.yaml import YAML
+# Both imports are needed to avoid errors in Windows
+import distutils
+from distutils import dir_util
 
 MKDOCS_YML = 'mkdocs.yml'
 
@@ -86,7 +88,7 @@ def merge_sites(sites, master_site, unify_sites, print_func):
 
         try:
             # Update if the directory already exists to allow site unification
-            distutils.dir_util.copy_tree(old_site_docs, new_site_docs, update=1)
+            dir_util.copy_tree(old_site_docs, new_site_docs, update=1)
         except OSError as exc:
             print_func('Error copying files of site "' +
                        site_name + '". This site will be skipped.')
