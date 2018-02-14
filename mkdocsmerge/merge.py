@@ -1,5 +1,9 @@
 import os.path
+
+#Both imports are needed to avoid errors in Windows
 import distutils
+from distutils import dir_util
+
 from ruamel.yaml import YAML
 
 MKDOCS_YML = 'mkdocs.yml'
