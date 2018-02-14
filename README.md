@@ -97,5 +97,6 @@ Very basic implementation. The code works but doesn't allow to specify options f
 - [ ] Better error handling.
 - [x] Merge configuration via CLI options.
 - [x] Unit testing (work in progress).
+- [ ] CLI integration testing.
 - [ ] Consider more complex cases.
 - [x] Make MkDocs Merge module friendly: thanks to [mihaipopescu](https://github.com/mihaipopescu)

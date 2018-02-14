@@ -2,7 +2,7 @@
 
 import click
 from mkdocsmerge import __version__
-import merge
+from mkdocsmerge import merge
 
 UNIFY_HELP = ('Unify sites with the same "site_name" into a single sub-site. Contents of unified '
               'sub-sites will be stored in the same subsite folder.')
