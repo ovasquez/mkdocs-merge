@@ -11,7 +11,7 @@ Supports unification of sites with the same `site_name` into a single sub-site.
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/10abc652aca046079f4ab069af689163)](https://www.codacy.com/app/oscarv19/mkdocs-merge?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ovasquez/mkdocs-merge&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/10abc652aca046079f4ab069af689163)](https://www.codacy.com/app/oscarv19/mkdocs-merge?utm_source=github.com&utm_medium=referral&utm_content=ovasquez/mkdocs-merge&utm_campaign=Badge_Coverage)
 
-MkDocs-Merge supports Python versions 2.7, 3.3, 3.4, 3.5, 3.6 and pypy.
+MkDocs-Merge supports Python versions 2.7, 3.4, 3.5, 3.6 and pypy.
 
 ## Install
 
