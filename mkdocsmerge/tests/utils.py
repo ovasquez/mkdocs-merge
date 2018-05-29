@@ -42,7 +42,8 @@ def generate_dummy_pages(docs_dir, key, node):
             generate_dummy_pages(docs_dir, k, v)
     else:
         path = os.path.join(docs_dir, str.replace(node, '\\', '/'))
-        os.makedirs(os.path.dirname(path), exist_ok=True)
+        if not os.path.exists(os.path.dirname(path)):
+            os.makedirs(os.path.dirname(path))
         with open(path, 'w') as mdf:
             mdf.write("""
 * %s Title
