@@ -30,10 +30,13 @@ class TestRunMerge(unittest.TestCase):
             True, lambda x: None)
 
         for site_name in site_names[1:]:
-            self.assertTrue(os.path.exists(os.path.join(site_name,
-                docs_dir_map.get(site_name, 'docs'), 'index.md')))
-            self.assertTrue(os.path.exists(os.path.join(site_names[0],
-                docs_dir_map.get(site_names[0], 'docs'), '%s_website' % site_name)))
+            index_path = os.path.join(site_name,
+                docs_dir_map.get(site_name, 'docs'), 'index.md')
+            self.assertTrue(os.path.exists(index_path))
+
+            docs_dir_path = os.path.join(site_names[0],
+                docs_dir_map.get(site_names[0], 'docs'), '%s_website' % site_name.lower())
+            self.assertTrue(os.path.exists(docs_dir_path))
 
         self.assertEqual(merged_pages,
         {

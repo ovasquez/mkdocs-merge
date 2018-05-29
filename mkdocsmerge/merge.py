@@ -40,7 +40,7 @@ def merge_sites(sites, master_site, unify_sites, print_func):
     with open(master_yaml) as master_file:
         master_data = myaml.load(master_file)
 
-    master_docs_dir = site_docs_dir = master_data.get('docs_dir', 'docs')
+    master_docs_dir = master_data.get('docs_dir', 'docs')
 
     new_pages = []
     for site in sites:
