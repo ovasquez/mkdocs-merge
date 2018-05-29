@@ -5,7 +5,6 @@ import shutil
 from .utils import generate_website, make_simple_yaml
 
 import mkdocsmerge.merge
-from ruamel.yaml import YAML
 
 
 class TestRunMerge(unittest.TestCase):
