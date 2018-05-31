@@ -15,17 +15,6 @@ def run_merge(master_site, sites, unify_sites, print_func):
                    'site.\nUse "mkdocs-merge run -h" for more information.')
         return
 
-
-    # Get all site's pages and copy their files
-    return merge_sites(sites, master_site, unify_sites, print_func)
-
-
-def merge_sites(sites, master_site, unify_sites, print_func):
-    """
-    Adds the sites' "pages" section to the master_data and copies the sites
-    content to the master_site.
-    """
-
     # Read the mkdocs.yml from the master site
     master_yaml = os.path.join(master_site, MKDOCS_YML)
     if not os.path.isfile(master_yaml):
@@ -33,11 +22,33 @@ def merge_sites(sites, master_site, unify_sites, print_func):
                    'make sure it exists: ' + master_yaml)
         return None
 
-    myaml = YAML()
+    # Round-trip yaml loader to preserve formatting and comments
+    yaml = YAML()
     with open(master_yaml) as master_file:
-        master_data = myaml.load(master_file)
+        master_data = yaml.load(master_file)
 
     master_docs_dir = master_data.get('docs_dir', 'docs')
+    master_docs_root = os.path.join(master_site, master_docs_dir)
+
+    # Get all site's pages and copy their files
+    new_pages = merge_sites(sites, master_docs_root, unify_sites, print_func)
+
+    # then add them to the master pages
+    master_data['pages'] += new_pages
+
+    # Rewrite the master's mkdocs.yml
+    with open(master_yaml, 'w') as master_file:
+        yaml.dump(master_data, master_file)
+
+    return master_data
+
+
+def merge_sites(sites, master_docs_root, unify_sites, print_func):
+    """
+    Copies the sites content to the master_docs_root and returns
+    the new merged "pages" to be added to the master yaml.
+    """
+
     # NOTE: need to do this otherwise subsequent distutil.copy_tree will fail if
     # mkdocs-merge is used as a module (https://stackoverflow.com/a/28055993/920464)
     distutils.dir_util._path_created = {}
@@ -77,7 +88,7 @@ def merge_sites(sites, master_site, unify_sites, print_func):
 
         # Copy site's files into the master site's "docs" directory
         old_site_docs = os.path.join(site, site_docs_dir)
-        new_site_docs = os.path.join(master_site, master_docs_dir, site_root)
+        new_site_docs = os.path.join(master_docs_root, site_root)
 
         if not os.path.isdir(old_site_docs):
             print_func('Could not find the site "docs_dir" folder. This site will '
@@ -102,13 +113,7 @@ def merge_sites(sites, master_site, unify_sites, print_func):
         print_func('Successfully merged site located in "' + site +
                    '" as sub-site "' + site_name + '"\n')
 
-    master_data['pages'] += new_pages
-
-    # Rewrite the master's mkdocs.yml
-    with open(master_yaml, 'w') as master_file:
-        myaml.dump(master_data, master_file)
-
-    return master_data
+    return new_pages
 
 
 def merge_single_site(global_pages, site_name, site_pages, unify_sites):
