@@ -1,10 +1,11 @@
-import tempfile
-import unittest
 import os
 import shutil
-from .utils import generate_website, make_simple_yaml
+import tempfile
+import unittest
 
 import mkdocsmerge.merge
+
+from .utils import generate_website, make_simple_yaml
 
 
 class TestRunMerge(unittest.TestCase):
