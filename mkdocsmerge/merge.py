@@ -15,9 +15,6 @@ def run_merge(master_site, sites, unify_sites, print_func):
                    'site.\nUse "mkdocs-merge run -h" for more information.')
         return
 
-    # NOTE: need to do this otherwise subsequent distutil.copy_tree will fail if
-    # mkdocs-merge is used as a module (https://stackoverflow.com/a/28055993/920464)
-    distutils.dir_util._path_created = {}
 
     # Get all site's pages and copy their files
     return merge_sites(sites, master_site, unify_sites, print_func)
@@ -41,6 +38,9 @@ def merge_sites(sites, master_site, unify_sites, print_func):
         master_data = myaml.load(master_file)
 
     master_docs_dir = master_data.get('docs_dir', 'docs')
+    # NOTE: need to do this otherwise subsequent distutil.copy_tree will fail if
+    # mkdocs-merge is used as a module (https://stackoverflow.com/a/28055993/920464)
+    distutils.dir_util._path_created = {}
 
     new_pages = []
     for site in sites:
