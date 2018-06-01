@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0 - June 1, 2018
+- Fixed the merge process ignoring the `docs` folder in the `mkdocs.yml` of the
+  sites to merge.
+- Removed support for Python 3.3 due to pip removing support for it.
+
 ## 0.4.2 - February 14, 2018
 - Fixed import error in `merge.py` when used in Windows.
 
