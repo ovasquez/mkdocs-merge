@@ -62,4 +62,3 @@ class TestRunMerge(unittest.TestCase):
         # Avoid leaving the temp directory open until program exit (bug in Windows)
         os.chdir(self.owd)
         shutil.rmtree(self.tmpdir)
-    
