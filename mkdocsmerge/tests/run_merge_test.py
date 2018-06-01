@@ -12,6 +12,7 @@ class TestRunMerge(unittest.TestCase):
 
     def setUp(self):
         self.tmpdir = tempfile.mkdtemp()
+        self.owd = os.getcwd()
         os.chdir(self.tmpdir)
 
     def test_run_merge(self):
@@ -58,4 +59,7 @@ class TestRunMerge(unittest.TestCase):
         })
 
     def tearDown(self):
+        # Avoid leaving the temp directory open until program exit (bug in Windows)
+        os.chdir(self.owd)
         shutil.rmtree(self.tmpdir)
+    
