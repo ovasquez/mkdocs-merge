@@ -17,13 +17,13 @@ def generate_website(directory, name, yml=None):
 
     docs_dir = os.path.join(root, docs_folder)
     os.mkdir(docs_dir)
-    generate_dummy_pages(docs_dir, 'pages', yml['pages'])
+    generate_dummy_pages(docs_dir, 'nav', yml['nav'])
 
 
 def make_simple_yaml(name, docs_dir=None):
     yml = {
         'site_name': '%s Website' % name,
-        'pages': [
+        'nav': [
             {'Home': "index.md"},
         ]
     }

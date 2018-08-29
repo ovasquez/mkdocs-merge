@@ -5,6 +5,7 @@ import distutils
 from distutils import dir_util
 
 MKDOCS_YML = 'mkdocs.yml'
+CONFIG_NAVIGATION = 'nav'
 
 
 def run_merge(master_site, sites, unify_sites, print_func):
@@ -30,11 +31,11 @@ def run_merge(master_site, sites, unify_sites, print_func):
     master_docs_dir = master_data.get('docs_dir', 'docs')
     master_docs_root = os.path.join(master_site, master_docs_dir)
 
-    # Get all site's pages and copy their files
-    new_pages = merge_sites(sites, master_docs_root, unify_sites, print_func)
+    # Get all site's navigation pages and copy their files
+    new_navs = merge_sites(sites, master_docs_root, unify_sites, print_func)
 
-    # then add them to the master pages
-    master_data['pages'] += new_pages
+    # then add them to the master nav section
+    master_data[CONFIG_NAVIGATION] += new_navs
 
     # Rewrite the master's mkdocs.yml
     with open(master_yaml, 'w') as master_file:
@@ -46,14 +47,14 @@ def run_merge(master_site, sites, unify_sites, print_func):
 def merge_sites(sites, master_docs_root, unify_sites, print_func):
     """
     Copies the sites content to the master_docs_root and returns
-    the new merged "pages" to be added to the master yaml.
+    the new merged "nav" pages to be added to the master yaml.
     """
 
     # NOTE: need to do this otherwise subsequent distutil.copy_tree will fail if
     # mkdocs-merge is used as a module (https://stackoverflow.com/a/28055993/920464)
     distutils.dir_util._path_created = {}
 
-    new_pages = []
+    new_navs = []
     for site in sites:
         print_func('\nAttempting to merge site: ' + site)
         site_yaml = os.path.join(site, MKDOCS_YML)
@@ -71,10 +72,14 @@ def merge_sites(sites, master_docs_root, unify_sites, print_func):
                            'This site will be skipped.')
                 continue
 
-        # Check 'site_data' has the 'pages' mapping
-        if not site_data['pages']:
-            print_func('Could not find the "pages" entry in the yaml file: "' +
+        # Check 'site_data' has the 'nav' mapping
+        if CONFIG_NAVIGATION not in site_data:
+            print_func('Could not find the "nav" entry in the yaml file: "' +
                        site_yaml + '", this site will be skipped.')
+            if 'pages' in site_data:
+                raise ValueError('The site ' + site_yaml + ' has the "pages" setting in the YAML file which is not '
+                                 'supported since MkDocs 1.0 and is not supported anymore by MkDocs Merge. Please '
+                                 'update your site to MkDocs 1.0 or higher.')
 
         try:
             site_name = str(site_data['site_name'])
@@ -104,53 +109,53 @@ def merge_sites(sites, master_docs_root, unify_sites, print_func):
             print_func(exc.strerror)
             continue
 
-        # Update the pages data with the new path after files have been copied
-        update_pages(site_data['pages'], site_root, print_func=print_func)
-        merge_single_site(new_pages, site_name,
-                          site_data['pages'], unify_sites)
+        # Update the nav data with the new path after files have been copied
+        update_navs(site_data[CONFIG_NAVIGATION], site_root, print_func=print_func)
+        merge_single_site(new_navs, site_name,
+                          site_data[CONFIG_NAVIGATION], unify_sites)
 
         # Inform the user
         print_func('Successfully merged site located in "' + site +
                    '" as sub-site "' + site_name + '"\n')
 
-    return new_pages
+    return new_navs
 
 
-def merge_single_site(global_pages, site_name, site_pages, unify_sites):
+def merge_single_site(global_nav, site_name, site_nav, unify_sites):
     """
-    Merges a single site's pages to the global pages' data. Supports unification
+    Merges a single site's nav to the global nav's data. Supports unification
     of sub-sites with the same site_name.
     """
     unified = False
     if unify_sites:
-        # Check if the site_name already exists in the global_pages
-        for page in global_pages:
+        # Check if the site_name already exists in the global_nav
+        for page in global_nav:
             if site_name in page:
                 # Combine the new site's pages to the existing entry
-                page[site_name] = page[site_name] + site_pages
+                page[site_name] = page[site_name] + site_nav
                 unified = True
                 break
     # Append to the global list if no unification was requested or it didn't exist.
     if (not unify_sites) or (not unified):
-        global_pages.append({site_name: site_pages})
+        global_nav.append({site_name: site_nav})
 
 
-def update_pages(pages, site_root, print_func):
+def update_navs(navs, site_root, print_func):
     """
-    Recursively traverses the lists of pages (dictionaries) to update the path
-    of the pages with the site_name, used as a subsection in the merged site.
+    Recursively traverses the lists of navs (dictionaries) to update the path
+    of the navs with the site_name, used as a subsection in the merged site.
     """
-    if isinstance(pages, list):
-        for page in pages:
-            update_pages(page, site_root, print_func)
-    elif isinstance(pages, dict):
-        for name, path in pages.items():
+    if isinstance(navs, list):
+        for page in navs:
+            update_navs(page, site_root, print_func)
+    elif isinstance(navs, dict):
+        for name, path in navs.items():
             if isinstance(path, str):
-                pages[name] = site_root + '/' + path
+                navs[name] = site_root + '/' + path
             elif isinstance(path, list):
-                update_pages(pages[name], site_root, print_func)
+                update_navs(navs[name], site_root, print_func)
             else:
                 print_func(
-                    'Error merging the "pages" entry in the site: ' + site_root)
+                    'Error merging the "nav" entry in the site: ' + site_root)
     else:
-        print_func('Error merging the "pages" entry in the site: ' + site_root)
+        print_func('Error merging the "nav" entry in the site: ' + site_root)

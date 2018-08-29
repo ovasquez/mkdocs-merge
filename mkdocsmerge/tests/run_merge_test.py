@@ -43,7 +43,7 @@ class TestRunMerge(unittest.TestCase):
 
         self.assertEqual(merged_pages, {
             'site_name': '__master__ Website',
-            'pages': [
+            'nav': [
                 {'Home': "index.md"},
                 {'Foo Website': [
                     {'Home': 'foo_website/index.md'}

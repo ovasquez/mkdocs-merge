@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.6.0 - August 29, 2018
+- **Breaking change:** added support for added support for MkDocs 1.0 and dropped support for earlier versions.
+
 ## 0.5.0 - June 1, 2018
 - Fixed the merge process ignoring the `docs` folder in the `mkdocs.yml` of the
   sites to merge.
