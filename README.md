@@ -5,6 +5,10 @@ into a single one converting each of the specified sites to a sub-site of the ma
 
 Supports unification of sites with the same `site_name` into a single sub-site.
 
+> Note: Since version 0.6 MkDocs Merge added support for MkDocs 1.0 and dropped
+> support for earlier versions.
+> See here for more details about the changes in [MkDocs 1.0](https://www.mkdocs.org/about/release-notes/#version-10-2018-08-03).
+
 ---
 [![PyPI version](https://img.shields.io/pypi/v/mkdocs-merge.svg)](https://pypi.python.org/pypi/mkdocs-merge)
 [![Build Status](https://travis-ci.org/ovasquez/mkdocs-merge.svg?branch=master)](https://travis-ci.org/ovasquez/mkdocs-merge)
@@ -46,7 +50,7 @@ A single MkDocs site will be created in `root/mypath/mysite`, and the sites in
 
 ```yaml
 ...
-pages:
+nav:
   - Home: index.md
   - About: about.md
 ```
@@ -55,7 +59,7 @@ pages:
 
 ```yaml
 ...
-pages:
+nav:
   - Home: index.md
   - About: about.md
   - new-site: new-site/home/another.md # Page merged from /another/path/new-site
@@ -78,6 +82,7 @@ $ pip install -e .[dev]
 ### Test
 
 The tests can be run using `tox` from the root directory. `tox` is part of the development dependencies:
+
 ```bash
 $ tox
 ```
