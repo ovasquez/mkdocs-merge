@@ -1,0 +1,24 @@
+site_name: MkDocs Merge
+site_description: MkDocs site merge tool
+site_author: Oscar Vasquez
+site_url: https://ovasquez.github.io/mkdocs-merge/
+
+copyright: 'Copyright &copy; Oscar Vasquez'
+
+repo_name: 'ovasquez/mkdocs-merge'
+repo_url: 'https://github.com/ovasquez/mkdocs-merge'
+edit_uri: ""
+
+
+nav:
+  - Home: index.md
+  - Changelog: changelog.md
+
+theme:
+  name: 'material'
+  palette:
+    primary: 'cyan'
+    accent: 'pink'
+  logo:
+    icon: 'share'
+  language: 'en'
