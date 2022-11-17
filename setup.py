@@ -39,6 +39,8 @@ setup(
     name='mkdocs-merge',
     version=find_version('mkdocsmerge', '__init__.py'),
     description='Tool to merge multiple MkDocs sites into a single directory',
+    long_description=open('README.md', 'r').read(),
+    long_description_content_type='text/markdown',
     url='https://github.com/ovasquez/mkdocs-merge',
     download_url='https://github.com/ovasquez/mkdocs-merge/archive/main.zip',
     license='MIT',

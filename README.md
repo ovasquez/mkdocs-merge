@@ -5,17 +5,18 @@ into a single one converting each of the specified sites to a sub-site of the ma
 
 Supports unification of sites with the same `site_name` into a single sub-site.
 
+## Changelog
+Access the changelog here: https://ovasquez.github.io/mkdocs-merge/changelog/
+
 > Note: Since version 0.6 MkDocs Merge added support for MkDocs 1.0 and dropped
 > support for earlier versions.
 > See here for more details about the changes in [MkDocs 1.0](https://www.mkdocs.org/about/release-notes/#version-10-2018-08-03).
 
 ---
 [![PyPI version](https://img.shields.io/pypi/v/mkdocs-merge.svg)](https://pypi.python.org/pypi/mkdocs-merge)
-[![Build Status](https://travis-ci.org/ovasquez/mkdocs-merge.svg?branch=master)](https://travis-ci.org/ovasquez/mkdocs-merge)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/10abc652aca046079f4ab069af689163)](https://www.codacy.com/app/oscarv19/mkdocs-merge?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ovasquez/mkdocs-merge&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/10abc652aca046079f4ab069af689163)](https://www.codacy.com/app/oscarv19/mkdocs-merge?utm_source=github.com&utm_medium=referral&utm_content=ovasquez/mkdocs-merge&utm_campaign=Badge_Coverage)
+[![MkDocs Merge Validation Build](https://github.com/ovasquez/mkdocs-merge/actions/workflows/build.yml/badge.svg)](https://github.com/ovasquez/mkdocs-merge/actions/workflows/build.yml)
 
-MkDocs-Merge supports Python versions 2.7, 3.4, 3.5, 3.6 and pypy.
+MkDocs-Merge officially supports Python versions 3.8, 3.9 and 3.10. It has been tested to work correctly in previous 3.X versions, but those are no longer officially supported.
 
 ## Install
 
@@ -94,7 +95,7 @@ Very basic implementation. The code works but doesn't allow to specify options f
 ### Pending work
 
 - [ ] Refactoring of large functions.
-- [x] Travis CI build.
+- [x] GitHub Actions build.
 - [x] Publish pip package.
 - [ ] Better error handling.
 - [x] Merge configuration via CLI options.
