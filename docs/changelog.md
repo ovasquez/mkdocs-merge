@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.0 - November 16, 2022
+- **Breaking change:** removed support for Python 2 and Python 3.4.
+- Updated several dependencies.
+- DEV: migrated tests from nose to pytest.
+
 ## 0.6.0 - August 29, 2018
 - **Breaking change:** added support for added support for MkDocs 1.0 and dropped support for earlier versions.
 
