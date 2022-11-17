@@ -10,14 +10,18 @@ git:
 language: python
 matrix:
     include:
-        - python: 2.7
-          env: TOXENV=py27
-        - python: 3.4
-          env: TOXENV=py34
         - python: 3.5
           env: TOXENV=py35
         - python: 3.6
           env: TOXENV=py36
+        - python: 3.7
+          env: TOXENV=py37
+        - python: 3.8
+          env: TOXENV=py38
+        - python: 3.9
+          env: TOXENV=py39
+        - python: 3.10
+          env: TOXENV=py310
         - python: pypy
           env: TOXENV=pypy
         - env: TOXENV=flake8
@@ -46,4 +50,4 @@ deploy:
   on:
     tags: true
     repo: ovasquez/mkdocs-merge
-    condition: "$TOXENV = py36"
+    condition: "$TOXENV = py310"

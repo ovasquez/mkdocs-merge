@@ -27,13 +27,12 @@ def find_version(*file_paths):
 
 
 REQUIREMENTS = ['click>=5.0',
-                'mkdocs>=0.16',
-                'ruamel.yaml>=0.15']
+                'mkdocs>=1.0',
+                'ruamel.yaml>=0.17']
 
-EXTRA_REQUIREMENTS = ['tox>=2.0',
-                      'nose',
-                      'coverage',
-                      'codacy-coverage']
+EXTRA_REQUIREMENTS = ['tox>=3.0',
+                      'pytest',
+                      'pytest-cov']
 
 # Package description
 setup(
@@ -67,12 +66,13 @@ setup(
         'Environment :: Console',
         'Environment :: Web Environment',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
     zip_safe=False
 )
