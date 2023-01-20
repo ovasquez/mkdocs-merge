@@ -113,3 +113,31 @@ class TestSiteMerges(unittest.TestCase):
         mkdocsmerge.merge.merge_single_site(
             global_nav, site_name, site_nav, True)
         self.assertEqual(global_nav, expected)
+
+    def test_update_pages_with_section_indexes(self):
+        """
+        Verifies the correct updating of the section index pages' paths.
+        """
+        # Create original and expected data structures
+        subpage = 'new_root'
+        subpage_path = subpage + '/'
+        nav = [{'Home': 'index.md'},
+               {'Projects': [
+                   'projects/index.md',
+                   {'Nested': [
+                       'projects/nested/index.md',
+                       {'Third': 'projects/nest/third.md'}
+                   ]}
+               ]}]
+
+        expected = [{'Home': subpage_path + 'index.md'},
+                    {'Projects': [
+                        subpage_path + 'projects/index.md',
+                        {'Nested': [
+                            subpage_path + 'projects/nested/index.md',
+                            {'Third': subpage_path + 'projects/nest/third.md'}
+                        ]}
+                    ]}]
+
+        mkdocsmerge.merge.update_navs(nav, subpage, lambda x: None)
+        self.assertEqual(nav, expected)
