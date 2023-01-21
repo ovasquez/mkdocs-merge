@@ -11,11 +11,9 @@ Supports unification of sites with the same `site_name` into a single sub-site.
 
 ---
 [![PyPI version](https://img.shields.io/pypi/v/mkdocs-merge.svg)](https://pypi.python.org/pypi/mkdocs-merge)
-[![Build Status](https://travis-ci.org/ovasquez/mkdocs-merge.svg?branch=master)](https://travis-ci.org/ovasquez/mkdocs-merge)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/10abc652aca046079f4ab069af689163)](https://www.codacy.com/app/oscarv19/mkdocs-merge?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ovasquez/mkdocs-merge&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/10abc652aca046079f4ab069af689163)](https://www.codacy.com/app/oscarv19/mkdocs-merge?utm_source=github.com&utm_medium=referral&utm_content=ovasquez/mkdocs-merge&utm_campaign=Badge_Coverage)
+[![MkDocs Merge Validation Build](https://github.com/ovasquez/mkdocs-merge/actions/workflows/build.yml/badge.svg)](https://github.com/ovasquez/mkdocs-merge/actions/workflows/build.yml)
 
-MkDocs-Merge supports Python versions 2.7, 3.4, 3.5, 3.6 and pypy.
+MkDocs-Merge supports Python versions 3.5+ and pypy.
 
 ## Install
 
@@ -94,7 +92,8 @@ Very basic implementation. The code works but doesn't allow to specify options f
 ### Pending work
 
 - [ ] Refactoring of large functions.
-- [x] Travis CI build.
+- [x] GitHub Actions build.
+- [x] GitHub Actions release automation.
 - [x] Publish pip package.
 - [ ] Better error handling.
 - [x] Merge configuration via CLI options.

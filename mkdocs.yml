@@ -7,7 +7,6 @@ copyright: 'Copyright &copy; Oscar Vasquez'
 
 repo_name: 'ovasquez/mkdocs-merge'
 repo_url: 'https://github.com/ovasquez/mkdocs-merge'
-edit_uri: ""
 
 
 nav:
@@ -15,10 +14,28 @@ nav:
   - Changelog: changelog.md
 
 theme:
-  name: 'material'
+  name: material
   palette:
-    primary: 'cyan'
-    accent: 'pink'
-  logo:
-    icon: 'share'
-  language: 'en'
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: 'lime'
+      accent: 'purple'
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: 'lime'
+      accent: 'purple'
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    logo: material/source-repository-multiple
+
+plugins:
+  - search:
+      lang: en
