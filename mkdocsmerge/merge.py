@@ -147,7 +147,10 @@ def update_navs(navs, site_root, print_func):
     """
     if isinstance(navs, list):
         for page in navs:
-            update_navs(page, site_root, print_func)
+            if isinstance(page, str):
+                navs[navs.index(page)] = site_root + "/" + page
+            else:
+                update_navs(page, site_root, print_func)
     elif isinstance(navs, dict):
         for name, path in navs.items():
             if isinstance(path, str):
