@@ -1,6 +1,6 @@
 # Changelog
 ## 0.8.0 - January 20, 2023
-- Added support for section index pagesm a
+- Added support for section index pages
   [feature from MkDocs Material](https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages)
   (thanks to [@Acerinth](https://github.com/Acerinth)).
 
