@@ -1,4 +1,7 @@
 # Changelog
+## 0.8.0 - January 20, 2023
+- Added support for section index pagesm a
+  [feature from MkDocs Material](https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages) (thanks to @Acerinth).
 
 ## 0.7.0 - November 16, 2022
 - **Breaking change:** removed support for Python 2 and Python 3.4.
