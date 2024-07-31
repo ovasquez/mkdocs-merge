@@ -1,4 +1,10 @@
 # Changelog
+
+## 0.9.0 - July 30, 2024
+- Fixed bug of `dir_util.copy_tree` caused by setuptools moving to 70.2.0 (fixes [#20](https://github.com/ovasquez/mkdocs-merge/issues/20)).
+- Updated dependency on deprecated distutils package to use setuptools version.
+- Updated project to use `pyproject.toml` instead of `setup.py` (package version now has to be manually kept in sync).
+
 ## 0.8.0 - January 20, 2023
 - Added support for section index pages
   [feature from MkDocs Material](https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages)
