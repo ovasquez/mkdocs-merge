@@ -69,12 +69,11 @@ nav:
 ### Dev Install
 
 Clone the repository and specify the `dev` dependencies on the install command.
-
-Check this [StackOverflow answer](https://stackoverflow.com/a/28842733/2313246) for more details about the `dev`
-dependencies
+Project has been updated to use `pyproject.toml` so the version has to be manually synchronized.
 
 ```bash
-$ pip install -e .[dev]
+# Using quotes for zsh compatibility
+$ pip install -e '.[dev]'
 ```
 
 ### Test
@@ -84,6 +83,10 @@ The tests can be run using `tox` from the root directory. `tox` is part of the d
 ```bash
 $ tox
 ```
+
+### Publishing
+
+The publishing process was updated to use GitHub Actions.
 
 ## Project Status
 

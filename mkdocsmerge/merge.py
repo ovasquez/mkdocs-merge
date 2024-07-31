@@ -1,8 +1,7 @@
 import os.path
 from ruamel.yaml import YAML
-# Both imports are needed to avoid errors in Windows
-import distutils
-from distutils import dir_util
+# Using the setuptools version because of the deprecation of the distutils package
+import setuptools._distutils.dir_util as dir_util
 
 MKDOCS_YML = 'mkdocs.yml'
 CONFIG_NAVIGATION = 'nav'
@@ -52,7 +51,7 @@ def merge_sites(sites, master_docs_root, unify_sites, print_func):
 
     # NOTE: need to do this otherwise subsequent distutil.copy_tree will fail if
     # mkdocs-merge is used as a module (https://stackoverflow.com/a/28055993/920464)
-    distutils.dir_util._path_created = {}
+    dir_util._path_created.clear()
 
     new_navs = []
     for site in sites:

@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mkdocs-merge"
+version = "0.9.0"
+description = "Tool to merge multiple MkDocs sites into a single directory"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Oscar Vasquez", email = "oscar@vasquezcr.com" }
+]
+keywords = ["mkdocs", "documentation", "merge", "multiple"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Topic :: Documentation",
+    "Topic :: Text Processing",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10"
+]
+dependencies = [
+    "click>=5.0",
+    "mkdocs>=1.0",
+    "ruamel.yaml>=0.17"
+]
+
+[project.urls]
+homepage = "https://github.com/ovasquez/mkdocs-merge"
+repository = "https://github.com/ovasquez/mkdocs-merge"
+download = "https://github.com/ovasquez/mkdocs-merge/archive/main.zip"
+
+[project.optional-dependencies]
+dev = [
+    "tox>=3.0",
+    "pytest",
+    "pytest-cov"
+]
+
+[project.scripts]
+mkdocs-merge = "mkdocsmerge.__main__:cli"
