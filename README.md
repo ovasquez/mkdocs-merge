@@ -74,6 +74,18 @@ nav:
 Clone the repository and specify the `dev` dependencies on the install command.
 Project has been updated to use `pyproject.toml` so the version has to be manually synchronized in both `__init__.py` and `pyproject.toml`.
 
+#### Setup Virtual Environment
+
+Before installing the package, create and activate a virtual environment in the root directory of the repo:
+
+```bash
+cd <root of the cloned repo>
+python -m venv .venv
+source .venv/bin/activate
+```
+
+#### Install the package for development mode
+
 ```bash
 # Using quotes for zsh compatibility
 $ pip install -e '.[dev]'
