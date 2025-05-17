@@ -17,6 +17,9 @@ permissions:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
     steps:
       # 1) Check out the repo
       - name: Checkout repository
