@@ -1,25 +1,29 @@
 import os.path
+import shutil
 from ruamel.yaml import YAML
-# Using the setuptools version because of the deprecation of the distutils package
-import setuptools._distutils.dir_util as dir_util
 
-MKDOCS_YML = 'mkdocs.yml'
-CONFIG_NAVIGATION = 'nav'
+
+MKDOCS_YML = "mkdocs.yml"
+CONFIG_NAVIGATION = "nav"
 
 
 def run_merge(master_site, sites, unify_sites, print_func):
 
     # Custom argument validation instead of an ugly generic error
     if not sites:
-        print_func('Please specify one or more sites to merge to the master '
-                   'site.\nUse "mkdocs-merge run -h" for more information.')
+        print_func(
+            "Please specify one or more sites to merge to the master "
+            'site.\nUse "mkdocs-merge run -h" for more information.'
+        )
         return
 
     # Read the mkdocs.yml from the master site
     master_yaml = os.path.join(master_site, MKDOCS_YML)
     if not os.path.isfile(master_yaml):
-        print_func('Could not find the master site yml file, '
-                   'make sure it exists: ' + master_yaml)
+        print_func(
+            "Could not find the master site yml file, "
+            "make sure it exists: " + master_yaml
+        )
         return None
 
     # Round-trip yaml loader to preserve formatting and comments
@@ -27,7 +31,7 @@ def run_merge(master_site, sites, unify_sites, print_func):
     with open(master_yaml) as master_file:
         master_data = yaml.load(master_file)
 
-    master_docs_dir = master_data.get('docs_dir', 'docs')
+    master_docs_dir = master_data.get("docs_dir", "docs")
     master_docs_root = os.path.join(master_site, master_docs_dir)
 
     # Get all site's navigation pages and copy their files
@@ -37,7 +41,7 @@ def run_merge(master_site, sites, unify_sites, print_func):
     master_data[CONFIG_NAVIGATION] += new_navs
 
     # Rewrite the master's mkdocs.yml
-    with open(master_yaml, 'w') as master_file:
+    with open(master_yaml, "w") as master_file:
         yaml.dump(master_data, master_file)
 
     return master_data
@@ -49,73 +53,93 @@ def merge_sites(sites, master_docs_root, unify_sites, print_func):
     the new merged "nav" pages to be added to the master yaml.
     """
 
-    # NOTE: need to do this otherwise subsequent distutil.copy_tree will fail if
-    # mkdocs-merge is used as a module (https://stackoverflow.com/a/28055993/920464)
-    dir_util._path_created.clear()
-
     new_navs = []
     for site in sites:
-        print_func('\nAttempting to merge site: ' + site)
+        print_func("\nAttempting to merge site: " + site)
         site_yaml = os.path.join(site, MKDOCS_YML)
         if not os.path.isfile(site_yaml):
-            print_func('Could not find the site yaml file, this site will be '
-                       'skipped: "' + site_yaml + '"')
+            print_func(
+                "Could not find the site yaml file, this site will be "
+                'skipped: "' + site_yaml + '"'
+            )
             continue
 
         with open(site_yaml) as site_file:
             try:
-                yaml = YAML(typ='safe')
+                yaml = YAML(typ="safe")
                 site_data = yaml.load(site_file)
             except Exception:
-                print_func('Error loading the yaml file "' + site_yaml + '". '
-                           'This site will be skipped.')
+                print_func(
+                    'Error loading the yaml file "' + site_yaml + '". '
+                    "This site will be skipped."
+                )
                 continue
 
         # Check 'site_data' has the 'nav' mapping
         if CONFIG_NAVIGATION not in site_data:
-            print_func('Could not find the "nav" entry in the yaml file: "' +
-                       site_yaml + '", this site will be skipped.')
-            if 'pages' in site_data:
-                raise ValueError('The site ' + site_yaml + ' has the "pages" setting in the YAML file which is not '
-                                 'supported since MkDocs 1.0 and is not supported anymore by MkDocs Merge. Please '
-                                 'update your site to MkDocs 1.0 or higher.')
+            print_func(
+                'Could not find the "nav" entry in the yaml file: "'
+                + site_yaml
+                + '", this site will be skipped.'
+            )
+            if "pages" in site_data:
+                raise ValueError(
+                    "The site "
+                    + site_yaml
+                    + ' has the "pages" setting in the YAML file which is not '
+                    "supported since MkDocs 1.0 and is not supported anymore by MkDocs Merge. Please "
+                    "update your site to MkDocs 1.0 or higher."
+                )
 
         try:
-            site_name = str(site_data['site_name'])
+            site_name = str(site_data["site_name"])
         except Exception:
             site_name = os.path.basename(site)
-            print_func('Could not find the "site_name" property in the yaml file. '
-                       'Defaulting the site folder name to: "' + site_name + '"')
+            print_func(
+                'Could not find the "site_name" property in the yaml file. '
+                'Defaulting the site folder name to: "' + site_name + '"'
+            )
 
-        site_root = site_name.replace(' ', '_').lower()
-        site_docs_dir = site_data.get('docs_dir', 'docs')
+        site_root = site_name.replace(" ", "_").lower()
+        site_docs_dir = site_data.get("docs_dir", "docs")
 
         # Copy site's files into the master site's "docs" directory
         old_site_docs = os.path.join(site, site_docs_dir)
         new_site_docs = os.path.join(master_docs_root, site_root)
 
         if not os.path.isdir(old_site_docs):
-            print_func('Could not find the site "docs_dir" folder. This site will '
-                       'be skipped: ' + old_site_docs)
+            print_func(
+                'Could not find the site "docs_dir" folder. This site will '
+                "be skipped: " + old_site_docs
+            )
             continue
 
         try:
             # Update if the directory already exists to allow site unification
-            dir_util.copy_tree(old_site_docs, new_site_docs, update=1)
+            shutil.copytree(old_site_docs, new_site_docs, dirs_exist_ok=True)
         except OSError as exc:
-            print_func('Error copying files of site "' +
-                       site_name + '". This site will be skipped.')
+            print_func(
+                'Error copying files of site "'
+                + site_name
+                + '". This site will be skipped.'
+            )
             print_func(exc.strerror)
             continue
 
         # Update the nav data with the new path after files have been copied
         update_navs(site_data[CONFIG_NAVIGATION], site_root, print_func=print_func)
-        merge_single_site(new_navs, site_name,
-                          site_data[CONFIG_NAVIGATION], unify_sites)
+        merge_single_site(
+            new_navs, site_name, site_data[CONFIG_NAVIGATION], unify_sites
+        )
 
         # Inform the user
-        print_func('Successfully merged site located in "' + site +
-                   '" as sub-site "' + site_name + '"\n')
+        print_func(
+            'Successfully merged site located in "'
+            + site
+            + '" as sub-site "'
+            + site_name
+            + '"\n'
+        )
 
     return new_navs
 
@@ -153,11 +177,10 @@ def update_navs(navs, site_root, print_func):
     elif isinstance(navs, dict):
         for name, path in navs.items():
             if isinstance(path, str):
-                navs[name] = site_root + '/' + path
+                navs[name] = site_root + "/" + path
             elif isinstance(path, list):
                 update_navs(navs[name], site_root, print_func)
             else:
-                print_func(
-                    'Error merging the "nav" entry in the site: ' + site_root)
+                print_func('Error merging the "nav" entry in the site: ' + site_root)
     else:
         print_func('Error merging the "nav" entry in the site: ' + site_root)
