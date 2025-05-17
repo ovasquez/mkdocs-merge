@@ -15,11 +15,8 @@ permissions:
   id-token: write          # for authentication with deploy-pages
 
 jobs:
-  build-and-publish:
+  build:
     runs-on: ubuntu-latest
-    concurrency:
-      group: "pages"
-      cancel-in-progress: true
     steps:
       # 1) Check out the repo
       - name: Checkout repository
@@ -47,5 +44,14 @@ jobs:
         with:
           path: site/
 
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        id: deployment
+        uses: actions/deploy-pages@v4
