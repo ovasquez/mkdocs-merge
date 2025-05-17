@@ -16,11 +16,17 @@ nav:
 theme:
   name: material
   palette:
+     # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: 'lime'
-      accent: 'purple'
+      primary: indigo
+      accent: pink
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
@@ -28,14 +34,18 @@ theme:
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: 'lime'
-      accent: 'purple'
+      primary: indigo
+      accent: pink
       toggle:
         icon: material/brightness-4
-        name: Switch to light mode
+        name: Switch to system preference
   icon:
     logo: material/source-repository-multiple
 
 plugins:
   - search:
       lang: en
+
+markdown_extensions:
+  - pymdownx.tasklist:
+      custom_checkbox: true

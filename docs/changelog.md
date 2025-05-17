@@ -1,7 +1,7 @@
 # Changelog
 
 ## 0.10.0 - May 17, 2025
-- Replaced `dir_util.copy_tree` with `shutil.copytree` to use a built-in and maintained API in the directory merge functionality.
+- Permanent fix for [#20](https://github.com/ovasquez/mkdocs-merge/issues/20): replaced `dir_util.copy_tree` with `shutil.copytree` to use a built-in and maintained API in the directory merge functionality.
 - Added a test to verify the scenario of deleting paths and merging them again when using mkdocs-merge as a module.
 
 ## 0.9.0 - July 30, 2024
