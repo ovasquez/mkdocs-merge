@@ -3,10 +3,6 @@ name: Publish MkDocs-Merge Documentation
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-        - 'docs/**'
-        - 'mkdocs.yml'
 
 # Grant permissions needed by the Pages actions
 permissions:
@@ -17,6 +13,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       # 1) Check out the repo
       - name: Checkout repository
