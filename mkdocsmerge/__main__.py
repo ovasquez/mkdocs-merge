@@ -4,12 +4,17 @@ import click
 from mkdocsmerge import __version__
 from mkdocsmerge import merge
 
-UNIFY_HELP = ('Unify sites with the same "site_name" into a single sub-site. Contents of unified '
-              'sub-sites will be stored in the same subsite folder.')
+UNIFY_HELP = (
+    'Unify sites with the same "site_name" into a single navigation '
+    "section. When multiple sites have identical site_name values, their "
+    "navigation entries will be combined under one section instead of "
+    "creating duplicate entries. Useful for grouping related documentation "
+    "from multiple sources."
+)
 
 
-@click.group(context_settings={'help_option_names': ['-h', '--help']})
-@click.version_option(__version__, '-V', '--version')
+@click.group(context_settings={"help_option_names": ["-h", "--help"]})
+@click.version_option(__version__, "-V", "--version")
 def cli():
     """
     MkDocs-Merge
@@ -31,9 +36,9 @@ def cli():
 
 
 @cli.command()
-@click.argument('master-site', type=click.Path())
-@click.argument('sites', type=click.Path(), nargs=-1)
-@click.option('-u', '--unify-sites', is_flag=True, help=UNIFY_HELP)
+@click.argument("master-site", type=click.Path())
+@click.argument("sites", type=click.Path(), nargs=-1)
+@click.option("-u", "--unify-sites", is_flag=True, help=UNIFY_HELP)
 def run(master_site, sites, unify_sites):
     """
     Executes the site merging.\n
