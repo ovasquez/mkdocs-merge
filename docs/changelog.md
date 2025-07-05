@@ -3,9 +3,9 @@
 ## 0.11.0 - July 4, 2025
 
 - **Breaking change:** Fixed multiple merge duplication bug where running merge operations multiple times would create duplicate site entries in the master navigation.
-- **Behavior change:** When the same site is merged multiple times, existing entries are now REPLACED (not duplicated) to allow for site updates. This means if "Project A" already exists in the master site and you merge "Project A" again, the old entry will be completely removed and replaced with the new content.
+- **Behavior change:** When the same site is merged multiple times, existing entries are now replaced (not duplicated) to allow for site updates.
+- **Documentation pipeline:** Changed documentation publishing to manual trigger only.
 - Added comprehensive test suite for multiple merge scenarios including mixed existing/new sites and interaction with the unify_sites feature.
-- Added detailed documentation explaining the replace behavior to prevent user confusion.
 - Formatting all code with black formatter.
 
 ## 0.10.0 - May 17, 2025

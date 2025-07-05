@@ -12,15 +12,7 @@ into a single one converting each of the specified sites to a sub-site of the ma
 
 ## Important Behavior Note (v0.11.0+)
 
-When running merge operations multiple times with the same sites, **existing site entries are replaced, not duplicated**. This allows you to update subsites by simply re-running the merge command with updated source content.
-
-For example:
-
-- First merge: Adds "Project A" to master site
-- Second merge with "Project A": Replaces the existing "Project A" entry completely with new content
-- Other sites not being merged remain unchanged
-
-This behavior change was introduced in v0.11.0 to fix a bug where multiple merges would create duplicate navigation entries.
+When merging the same site multiple times, existing entries are **replaced** (not duplicated). This allows you to update subsites by re-running the merge command.
 
 ## Changelog
 
@@ -51,57 +43,24 @@ $ mkdocs-merge run MASTER_SITE SITES [-u]...
 
 ### Parameters
 
-- `MASTER_SITE`: the path to the MkDocs site where the base `mkdocs.yml` file resides. This is where all other sites
-  will be merged into.
-- `SITES`: the paths to each of the MkDocs sites that will be merged. Each of these paths is expected to have a
-  `mkdocs.yml` file and a `docs` folder.
-- `-u` (optional): Unify sites with the same "site_name" into a single sub-site. See [Unification Feature](#unification-feature) below for details.
+- `MASTER_SITE`: Path to the main MkDocs site (contains `mkdocs.yml`)
+- `SITES`: Paths to MkDocs sites to merge (each needs `mkdocs.yml` and `docs/` folder)
+- `-u` (optional): Unify sites with the same name into one section
 
-> **Note:** If you merge the same site multiple times, the existing entry will be replaced with the new content (not duplicated). This allows you to update subsites by re-running the merge command.
+> **Note:** Re-merging the same site replaces the existing content (enables updates).
 
 ## Unification Feature
 
-The `-u` flag enables **site unification**, which combines multiple sites that have the same `site_name` into a single navigation section. This is useful when you have related documentation split across multiple directories but want them to appear as one logical section.
+The `-u` flag combines multiple sites with the same `site_name` into a single navigation section.
 
-### Without Unification (default behavior)
+**Without `-u`:** Sites with the same name create duplicate navigation entries.  
+**With `-u`:** Sites with the same name are merged into one section.
 
-```bash
-$ mkdocs-merge run master-site api-core api-plugins
-```
+**Use Cases:**
 
-If both `api-core` and `api-plugins` have `site_name: "API Documentation"` in their `mkdocs.yml`, you'll get:
-
-```yaml
-nav:
-  - Home: index.md
-  - API Documentation: # From api-core
-      - Core Functions: api_documentation/core.md
-  - API Documentation: # From api-plugins (duplicate entry)
-      - Plugin System: api_documentation/plugins.md
-```
-
-### With Unification
-
-```bash
-$ mkdocs-merge run master-site api-core api-plugins -u
-```
-
-The same sites will be unified into a single section:
-
-```yaml
-nav:
-  - Home: index.md
-  - API Documentation: # Combined into one section
-      - Core Functions: api_documentation/core.md # From api-core
-      - Plugin System: api_documentation/plugins.md # From api-plugins
-```
-
-### Use Cases
-
-- **Microservices documentation**: Each service has its own docs but you want them grouped under "Services"
-- **Multi-repository projects**: Different repos contribute to the same logical documentation section
-- **Team-based documentation**: Multiple teams contribute to the same section (e.g., "API Reference")
-- **Modular documentation**: Large documentation split across multiple directories for maintainability
+- Microservices documentation grouped under "Services"
+- Multi-repository projects in the same logical section
+- Team-based documentation contributions
 
 ### Example
 
@@ -166,7 +125,7 @@ $ tox
 
 ### Publishing
 
-The publishing process was updated to use GitHub Actions.
+Package publishing uses GitHub Actions. Documentation is published manually from main branch via Actions tab.
 
 ## Project Status
 
